@@ -9,7 +9,7 @@ export class CoffeesController {
     }
 
     @Get(':id')
-    findOne(@Param() params) {
-        return `This action returns #${params.id} coffee.`
+    findOne(@Param('id') id: string) {
+        return `This action returns #${id} coffee.`
     }
 }
