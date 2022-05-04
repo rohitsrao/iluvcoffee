@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, NotFoundException, Param, Patch, Post, Query } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
+import { Coffee } from './entities/coffee.entity';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -9,27 +10,31 @@ export class CoffeesController {
 
     @Get()
     findAll(@Query() paginationQuery) {
-        const { limit, offset } = paginationQuery;
-        return `This action returns all coffees. Limit: ${limit}, offset: ${offset}`;
+        //const { limit, offset } = paginationQuery;
+        return this.coffesService.findAll();
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string): string {
-        return `This action returns #${id} coffee.`
+    findOne(@Param('id') id: string): Coffee {
+        const coffee = this.coffesService.findOne(id);
+        if (!coffee) {
+            throw new NotFoundException(`Coffee #${id} not found.`);
+        }
+        return coffee;
     }
 
     @Post()
     create(@Body() body) {
-        return body;
+        return this.coffesService.create(body);
     }
 
     @Patch(':id')
-    update(@Param('id') id: string, @Body() body): string {
-        return `This action updates #${id} coffee`
+    update(@Param('id') id: string, @Body() body): void {
+        return this.coffesService.update(id, body);
     }
 
     @Delete(':id')
-    remove(@Param('id') id: string) : string{
-        return `This action removes #${id} coffee`;
+    remove(@Param('id') id: string) : void {
+        return this.coffesService.remove(id);
     }
 }
