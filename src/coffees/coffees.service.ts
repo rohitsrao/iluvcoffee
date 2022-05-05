@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Coffee } from './entities/coffee.entity';
-import { CreateCoffeeDto } from './create-coffee.dto';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
 
 
 @Injectable()
@@ -23,7 +23,11 @@ export class CoffeesService {
   }
 
   create(createCoffeeDto: CreateCoffeeDto) {
-    this.coffees.push(createCoffeeDto);
+    const dtoWithId = {
+      ...createCoffeeDto,
+      id: 3,
+    }
+    this.coffees.push(dtoWithId);
     return createCoffeeDto;
   }
 
