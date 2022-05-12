@@ -8,6 +8,9 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
     transform: true,
     whitelist: true,
+    transformOptions: {
+      enableImplicitConversion: true,
+    }
   }))
   await app.listen(3000);
 }
