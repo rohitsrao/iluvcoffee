@@ -10,7 +10,7 @@ export class FlavorEntity {
   @Column()
   name: string;
 
-  @ManyToMany(type => Coffee, coffee => coffee.flavours)
+  @ManyToMany(type => Coffee, coffee => coffee.flavors)
   coffees: Coffee[];
 
 }
